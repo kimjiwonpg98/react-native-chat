@@ -27,6 +27,9 @@ expo를 이용해 진행하기 때문에 expo명령어로 설치
 6. 로딩 관련 라이브러리
 > expo install expo-app-loading
 
+7. 키보드 설정 관련 라이브러리
+> expo install react-native-keyboard-aware-scroll-View
+다른 곳 터치하면 키보드 포커스 아웃과 키보드가 화면을 가리는 오류 해결
 ## 👷‍♂️사용하는 데이터베이스
  --------------
  여러 기능을 사용하기 위해 파이어베이스를 사용
