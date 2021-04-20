@@ -6,6 +6,7 @@ import * as Font from "expo-font";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./theme";
 import Navigation from "./navigations";
+import { images } from "./utils/images";
 
 const cacheImages = (images) => {
   return images.map((image) => {
@@ -25,7 +26,10 @@ const App = () => {
   const [isReady, setIsReady] = useState(false);
 
   const _loadAssets = async () => {
-    const imageAssets = cacheImages([require("../assets/splash.png")]);
+    const imageAssets = cacheImages([
+      require("../assets/splash.png"),
+      ...Object.values(images),
+    ]);
     const fontAssets = cacheFonts([]);
 
     await Promise.all([...imageAssets, ...fontAssets]);
@@ -38,6 +42,9 @@ const App = () => {
     </ThemeProvider>
   ) : (
     <AppLoading
+      // startAsync: promise에 관련된 함수 실행
+      // onFinish:  실패하든 성공하든 실행하는 함수
+      //onError: 실패했을 경우
       startAsync={_loadAssets}
       onFinish={() => setIsReady(true)}
       onError={console.warn}

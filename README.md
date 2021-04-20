@@ -24,6 +24,9 @@ expo를 이용해 진행하기 때문에 expo명령어로 설치
 5. 데이터베이스 관련 라이브러리
 > expo install firebase
 
+6. 로딩 관련 라이브러리
+> expo install expo-app-loading
+
 ## 👷‍♂️사용하는 데이터베이스
  --------------
  여러 기능을 사용하기 위해 파이어베이스를 사용
