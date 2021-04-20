@@ -5,6 +5,7 @@ const colors = {
   grey_1: "#a6a6a6",
   red: "#e84118",
   blue: "#3679fe",
+  purple: "#C8C7ED",
 };
 
 export const theme = {
@@ -15,4 +16,10 @@ export const theme = {
   inputPlaceholder: colors.grey_1,
   inputBorder: colors.grey_1,
   errorText: colors.red,
+  //button
+  buttonBackground: colors.purple,
+  buttonTitle: colors.white,
+  buttonUnfilledTitle: colors.purple,
+  // 헤더
+  headerTintColor: colors.black,
 };
