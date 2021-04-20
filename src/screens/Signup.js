@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { Image, Input, Button } from "../components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { validateEmail, removeWhitespace } from "../utils/common";
+import { images } from "../utils/images";
 
 const Container = styled.View`
   flex: 1;
@@ -27,26 +28,32 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [photoUrl, setPhotoUrl] = useState(images.photo);
   const [disabled, setDisabled] = useState(true);
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const didMountRef = useRef();
 
   useEffect(() => {
-    let _errorMessage = "";
-    if (!name) {
-      _errorMessage = "이름을 적어주세요";
-    } else if (!validateEmail(email)) {
-      _errorMessage = "이메일을 확인해주세요";
-    } else if (password.length < 6) {
-      _errorMessage = "비밀번호는 6자리 이상";
-    } else if (password !== passwordConfirm) {
-      _errorMessage = "비밀번호가 일치하지 않습니다.";
+    if (didMountRef.current) {
+      let _errorMessage = "";
+      if (!name) {
+        _errorMessage = "이름을 적어주세요";
+      } else if (!validateEmail(email)) {
+        _errorMessage = "이메일을 확인해주세요";
+      } else if (password.length < 6) {
+        _errorMessage = "비밀번호는 6자리 이상";
+      } else if (password !== passwordConfirm) {
+        _errorMessage = "비밀번호가 일치하지 않습니다.";
+      } else {
+        _errorMessage = "";
+      }
+      setErrorMessage(_errorMessage);
     } else {
-      _errorMessage = "";
+      didMountRef.current = true;
     }
-    setErrorMessage(_errorMessage);
   }, [name, email, password, passwordConfirm]);
 
   useEffect(() => {
@@ -60,7 +67,7 @@ const Signup = () => {
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
       <Container>
-        <Image rounded />
+        <Image rounded url={photoUrl} showButton />
         <Input
           label="Name"
           value={name}

@@ -11,7 +11,6 @@ const colors = {
 export const theme = {
   background: colors.white,
   text: colors.black,
-  imageBackground: colors.white,
   label: colors.grey_1,
   inputPlaceholder: colors.grey_1,
   inputBorder: colors.grey_1,
@@ -22,4 +21,8 @@ export const theme = {
   buttonUnfilledTitle: colors.purple,
   // 헤더
   headerTintColor: colors.black,
+  //image
+  imageBackground: colors.white,
+  imageButtonBackground: colors.purple,
+  imageButtonIcon: colors.white,
 };
