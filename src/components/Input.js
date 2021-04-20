@@ -45,6 +45,7 @@ const Input = forwardRef(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
 
+    //secureTextEntry: 비밀번호처럼 안보이게 하는 경우
     return (
       <Container>
         <Label isFocused={isFocused}>{label}</Label>
@@ -60,7 +61,7 @@ const Input = forwardRef(
             onBlur();
           }}
           placeholder={placeholder}
-          isPassword={isPassword}
+          secureTextEntry={isPassword}
           returnKeyType={returnKeyType}
           maxLength={maxLength}
           autoCorrent={false}
@@ -77,7 +78,7 @@ Input.defaultProps = {
   onBlur: () => {},
 };
 
-Input.PropTypes = {
+Input.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
