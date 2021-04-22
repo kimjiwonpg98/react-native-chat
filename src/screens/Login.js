@@ -5,6 +5,8 @@ import { images } from "../utils/images";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { validateEmail, removeWhitespace } from "../utils/common";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Alert } from "react-native";
+import { login } from "../utils/firebase";
 
 const Container = styled.View`
   flex: 1;
@@ -43,6 +45,14 @@ const Login = ({ navigation }) => {
     setErrorMessage(
       validateEmail(changeEmail) ? "" : "이메일을 다시 확인해주세요"
     );
+  };
+
+  const _handleLoginButtonPress = async () => {
+    try {
+      const user = await login({ email, password });
+    } catch (e) {
+      Alert.alert("Login error", e.message);
+    }
   };
 
   const _handlePasswordChange = (password) => {

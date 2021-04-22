@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
+import { Platform, Alert } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import PropTypes from "prop-types";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -41,11 +44,49 @@ const PhotoButton = ({ onPress }) => {
   );
 };
 
-const Image = ({ url, imageStyle, rounded, showButton }) => {
+const Image = ({ url, imageStyle, rounded, showButton, onChangeImage }) => {
+  useEffect(() => {
+    (async () => {
+      try {
+        if (Platform.OS === "ios") {
+          const { status } = await Permissions.askAsync(
+            Permissions.MEDIA_LIBRARY
+          );
+          if (status !== "granted") {
+            Alert.alert("Photo Permisson");
+          }
+        }
+      } catch (e) {
+        Alert.alert("Photo Permission Error", e.message);
+      }
+    })();
+  }, []);
+
+  const _handleEditButton = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      //mediaTypes: 조회하는 자료의 타입
+      //allowsEditing: 이미지 선택 후 편집할껀지
+      //aspect(안드로이드용): 이미지 편집 시 사각형 비율
+      //quality: 압축 품질을 의미 1이 최대 품질
+      if (!result.cancelled) {
+        //cancelled로 결과의 선택 여부 확인
+        onChangeImage(result.uri);
+      }
+    } catch (e) {
+      Alert.alert("Photo Error", e.message);
+    }
+  };
+
   return (
     <Container>
       <StyledImage source={{ uri: url }} style={imageStyle} rounded={rounded} />
-      {showButton && <PhotoButton />}
+      {showButton && <PhotoButton onPress={_handleEditButton} />}
     </Container>
   );
 };
@@ -53,6 +94,7 @@ const Image = ({ url, imageStyle, rounded, showButton }) => {
 Image.defaultProps = {
   rounded: false,
   showButton: false,
+  onChangeImage: () => {},
 };
 
 Image.prototype = {
@@ -60,6 +102,7 @@ Image.prototype = {
   imageStyle: PropTypes.object,
   rounded: PropTypes.bool,
   showButton: PropTypes.bool,
+  onChangeImage: PropTypes.func,
 };
 
 export default Image;
