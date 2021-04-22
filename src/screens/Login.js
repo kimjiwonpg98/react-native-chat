@@ -50,6 +50,7 @@ const Login = ({ navigation }) => {
   const _handleLoginButtonPress = async () => {
     try {
       const user = await login({ email, password });
+      Alert.alert("Login Success", user.email);
     } catch (e) {
       Alert.alert("Login error", e.message);
     }
@@ -58,8 +59,6 @@ const Login = ({ navigation }) => {
   const _handlePasswordChange = (password) => {
     setPassword(removeWhitespace(password));
   };
-
-  const _handleLoginButtonPress = () => {};
 
   return (
     <KeyboardAwareScrollView
